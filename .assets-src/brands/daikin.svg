@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 572.1 120.2" style="enable-background:new 0 0 572.1 120.2;" xml:space="preserve">
+ <style type="text/css">
+  .st0{fill:#44C7F4;}
+	.st1{fill:#180F0E;}
+	.st2{fill:#00ADEE;}
+ </style>
+ <g>
+  <polyline class="st0" points="130.3,0 0,0 0,120.2  ">
+  </polyline>
+  <polyline class="st1" points="65.1,0 0,0 0,60.1  ">
+  </polyline>
+  <polyline class="st2" points="312.3,26.1 295.3,94.1 325.3,94.1 342.3,26.1  ">
+  </polyline>
+  <path class="st2" d="M239.3,26.1l-38.7,68h19.9l6.4-11.3h27.6l2.1,11.3H286l-12.5-68 M243.6,65.5h-6.9l11.1-19.6l3.6,19.6H243.6z">
+  </path>
+  <polyline class="st2" points="449.5,26.1 432.5,94.1 462.6,94.1 479.6,26.1  ">
+  </polyline>
+  <polyline class="st2" points="436.1,26.1 405.3,26.1 379.5,48.3 385.1,26.1 356.3,26.1 339.4,94.1 368.1,94.1 373.9,70.6    389.3,94.1 424,94.1 398.3,58.5  ">
+  </polyline>
+  <path class="st2" d="M175.6,26.1l-7.8,0h-37.6l-17,68h37.3l14.8,0c20.8,0,41.3-15.5,41.3-39.2C206.6,27,175.6,26.1,175.6,26.1    M177.1,57c0,0-2,22.1-20.8,22.1h-10.7l9.4-36.7h9.7C168.2,42.4,178.2,43.3,177.1,57">
+  </path>
+  <polyline class="st2" points="551.3,26.1 541.3,66.1 528,26.1 494.5,26.1 477.6,94.1 498.3,94.1 508.4,53.7 521.8,94.1 555.1,94.1    572.1,26.1  ">
+  </polyline>
+ </g>
+</svg>
