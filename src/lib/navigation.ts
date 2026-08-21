@@ -43,11 +43,18 @@ export const SERVICES_NAV: NavLink[] = [
 ];
 
 export const SHOP_NAV: NavLink[] = [
-  { label: "Klimatske naprave", href: "/trgovina/klimatske-naprave" },
-  { label: "Toplotne črpalke", href: "/trgovina/toplotne-crpalke" },
-  { label: "Bela tehnika", href: "/trgovina/bela-tehnika" },
-  { label: "Gostinska oprema", href: "/trgovina/gostinska-oprema" },
-  { label: "Servisni paketi", href: "/trgovina/servisni-paketi" },
+  {
+    label: "Klimatske naprave",
+    href: "/trgovina?kategorija=Klimatske%20naprave#vsi-izdelki",
+  },
+  {
+    label: "Bela tehnika",
+    href: "/trgovina?kategorija=Bela%20tehnika#vsi-izdelki",
+  },
+  {
+    label: "Gostinska in hladilna oprema",
+    href: "/trgovina?kategorija=Gostinska%20in%20hladilna%20oprema#vsi-izdelki",
+  },
 ];
 
 export const PRIMARY_NAV: {
@@ -59,6 +66,10 @@ export const PRIMARY_NAV: {
   { label: "Storitve", href: "/storitve", children: SERVICES_NAV, layout: "mega" },
   { label: "Trgovina", href: "/trgovina", children: SHOP_NAV, layout: "list" },
   { label: "Cenik", href: "/cenik" },
+  {
+    label: "Svetovanje na daljavo",
+    href: "/storitve/svetovanje-na-daljavo",
+  },
   { label: "Nasveti", href: "/nasveti" },
   { label: "O nas", href: "/o-nas" },
 ];
@@ -70,6 +81,8 @@ export const ROUTES = {
   about: "/o-nas",
   contact: "/kontakt",
   advice: "/nasveti",
+  remoteAdvice: "/storitve/svetovanje-na-daljavo",
+  cart: "/kosarica",
 } as const;
 
 export const LEGAL_NAV: NavLink[] = [

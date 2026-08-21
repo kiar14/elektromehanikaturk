@@ -145,9 +145,9 @@ export function MotionProvider() {
           el.dataset.enter === "right" ? travel : -travel,
       });
 
-      // heading → top row → bottom row, in seconds.
-      const HEAD_DELAY = [0, 0.08];
-      const CARD_DELAY = [0.22, 0.29, 0.45, 0.52];
+      const cardGroups = stacked
+        ? cards.map((card) => [card])
+        : [cards.slice(0, 2), cards.slice(2, 4)];
 
       servicesTriggers.push(
         ScrollTrigger.create({
@@ -161,25 +161,43 @@ export function MotionProvider() {
                 y: 0,
                 duration: 0.7,
                 ease: "expo.out",
-                delay: HEAD_DELAY[i] ?? 0,
-              });
-            });
-            cards.forEach((el, i) => {
-              gsap.to(el, {
-                opacity: 1,
-                x: 0,
-                scale: 1,
-                duration: 0.85,
-                ease: "expo.out",
-                delay: CARD_DELAY[i] ?? 0.22 + i * 0.07,
-                // Drop the transform once it has landed so the cards stop
-                // being their own compositing layer.
-                onComplete: () => gsap.set(el, { clearProps: "transform" }),
+                delay: i * 0.08,
               });
             });
           },
         }),
       );
+
+      // Each desktop row owns a viewport trigger. In the single-column
+      // layout every card becomes its own group, so no off-screen mobile
+      // card is animated together with the card above it.
+      cardGroups.forEach((group, groupIndex) => {
+        if (!group[0]) return;
+
+        servicesTriggers.push(
+          ScrollTrigger.create({
+            trigger: group[0],
+            start: "top 82%",
+            once: true,
+            onEnter: () => {
+              gsap.to(group, {
+                opacity: 1,
+                x: 0,
+                scale: 1,
+                duration: 1.25,
+                stagger: stacked ? 0 : 0.14,
+                ease: "power3.out",
+                delay: !stacked && groupIndex === 0 ? 0.16 : 0,
+                overwrite: true,
+                // Drop the transform once the group has landed so the
+                // cards stop being their own compositing layers.
+                onComplete: () =>
+                  gsap.set(group, { clearProps: "transform,willChange" }),
+              });
+            },
+          }),
+        );
+      });
     }
 
     // Anything already at or above the fold on arrival (deep link,

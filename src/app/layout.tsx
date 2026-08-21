@@ -6,6 +6,8 @@ import { MotionRoot } from "@/components/motion/MotionRoot";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { MobileBottomBar } from "@/components/layout/MobileBottomBar";
+import { CartProvider } from "@/components/commerce/CartProvider";
+import { CartDrawer } from "@/components/commerce/CartDrawer";
 import {
   ADDRESS,
   GEO,
@@ -117,7 +119,11 @@ const revealBootstrap = `(function(){try{if(matchMedia("(prefers-reduced-motion:
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="sl" className={`${geist.variable} h-full antialiased`}>
+    <html
+      lang="sl"
+      className={`${geist.variable} h-full antialiased`}
+      suppressHydrationWarning
+    >
       <head>
         <script dangerouslySetInnerHTML={{ __html: revealBootstrap }} />
       </head>
@@ -130,18 +136,21 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </a>
 
         <MotionRoot />
-        <Navbar />
+        <CartProvider>
+          <Navbar />
 
-        {/* Clearance for the fixed mobile action bar lives on the footer's
-            bottom row — that is the content the bar would otherwise cover. */}
-        {/* tabIndex={-1} so the skip link actually moves focus here, not
-            just the scroll position. */}
-        <main id="vsebina" tabIndex={-1} className="flex-1 outline-none">
-          {children}
-        </main>
+          {/* Clearance for the fixed mobile action bar lives on the footer's
+              bottom row — that is the content the bar would otherwise cover. */}
+          {/* tabIndex={-1} so the skip link actually moves focus here, not
+              just the scroll position. */}
+          <main id="vsebina" tabIndex={-1} className="flex-1 outline-none">
+            {children}
+          </main>
 
-        <Footer />
-        <MobileBottomBar />
+          <Footer />
+          <MobileBottomBar />
+          <CartDrawer />
+        </CartProvider>
 
         <script
           type="application/ld+json"

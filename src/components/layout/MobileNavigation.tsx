@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Menu, Phone, X } from "lucide-react";
+import { ChevronDown, Menu, Phone, X } from "lucide-react";
 
 import {
   Sheet,
@@ -18,6 +18,9 @@ import { PHONES, SITE } from "@/lib/site";
 import { pauseScroll, resumeScroll } from "@/lib/scroll";
 
 const FLAT_LINKS = PRIMARY_NAV.filter((item) => !item.children);
+const MOBILE_SERVICES = SERVICES_NAV.filter(
+  (item) => item.href !== ROUTES.remoteAdvice,
+);
 
 export function MobileNavigation() {
   const [open, setOpen] = useState(false);
@@ -33,7 +36,7 @@ export function MobileNavigation() {
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger
         aria-label="Odpri meni"
-        className="flex size-10 items-center justify-center rounded-[10px] border border-white/20 text-white transition-colors duration-200 hover:bg-white/10 lg:hidden"
+        className="flex size-10 items-center justify-center rounded-[10px] border border-white/20 text-white transition-colors duration-200 hover:bg-white/10 xl:hidden"
       >
         <Menu aria-hidden="true" className="size-5" />
       </SheetTrigger>
@@ -72,12 +75,21 @@ export function MobileNavigation() {
             aria-label="Mobilna navigacija"
             className="flex-1 overflow-y-auto overscroll-contain px-5 py-6"
           >
-            <MenuGroup title="Storitve" href="/storitve" links={SERVICES_NAV} onNavigate={() => setOpen(false)} />
-            <MenuGroup title="Trgovina" href={ROUTES.shop} links={SHOP_NAV} onNavigate={() => setOpen(false)} />
+            <MenuGroup
+              title="Storitve"
+              href="/storitve"
+              links={MOBILE_SERVICES}
+              onNavigate={() => setOpen(false)}
+            />
+            <MenuGroup
+              title="Trgovina"
+              href={ROUTES.shop}
+              links={SHOP_NAV}
+              onNavigate={() => setOpen(false)}
+            />
 
             <ul className="mt-8 grid gap-1 border-t border-line-dark pt-6">
-              {[...FLAT_LINKS, { label: "Kontakt", href: ROUTES.contact }].map(
-                (item) => (
+              {FLAT_LINKS.map((item) => (
                   <li key={item.href}>
                     <Link
                       href={item.href}
@@ -87,8 +99,7 @@ export function MobileNavigation() {
                       {item.label}
                     </Link>
                   </li>
-                ),
-              )}
+                ))}
             </ul>
 
             <div className="mt-8 border-t border-line-dark pt-6">
@@ -139,28 +150,46 @@ function MenuGroup({
   links: { label: string; href: string }[];
   onNavigate: () => void;
 }) {
+  const [expanded, setExpanded] = useState(false);
+
   return (
     <div className="mb-8">
-      <Link
-        href={href}
-        onClick={onNavigate}
-        className="text-[0.6875rem] font-medium tracking-[0.16em] text-on-dark-2 uppercase transition-colors duration-150 hover:text-white"
-      >
-        {title}
-      </Link>
-      <ul className="mt-3 grid gap-1">
-        {links.map((link) => (
-          <li key={link.href}>
-            <Link
-              href={link.href}
-              onClick={onNavigate}
-              className="block py-2 text-[1.0625rem] font-medium text-on-dark transition-colors duration-150 hover:text-white"
-            >
-              {link.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <div className="flex items-center justify-between gap-3">
+        <Link
+          href={href}
+          onClick={onNavigate}
+          className="text-lg font-semibold text-on-dark transition-colors hover:text-white"
+        >
+          {title}
+        </Link>
+        <button
+          type="button"
+          onClick={() => setExpanded((current) => !current)}
+          aria-label={`${expanded ? "Skrij" : "Prikaži"} kategorije: ${title}`}
+          aria-expanded={expanded}
+          className="flex size-9 items-center justify-center rounded-[10px] border border-white/15 text-on-dark transition-colors hover:bg-white/10"
+        >
+          <ChevronDown
+            aria-hidden="true"
+            className={`size-4 transition-transform duration-200 ${expanded ? "rotate-180" : ""}`}
+          />
+        </button>
+      </div>
+      {expanded ? (
+        <ul className="mt-3 grid gap-1 border-l border-line-dark pl-4">
+          {links.map((link) => (
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                onClick={onNavigate}
+                className="block py-2 text-[0.9375rem] font-medium text-on-dark-2 transition-colors hover:text-white"
+              >
+                {link.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      ) : null}
     </div>
   );
 }
