@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -27,6 +28,7 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
  */
 export function MotionProvider() {
   const lenisRef = useRef<Lenis | null>(null);
+  const pathname = usePathname();
 
   useGSAP(() => {
     const reducedMotion = window.matchMedia(
@@ -255,7 +257,14 @@ export function MotionProvider() {
       lenis.destroy();
       lenisRef.current = null;
     };
-  }, []);
+  }, {
+    // RootLayout persists across App Router navigations. Rebuild the
+    // page-scoped ScrollTriggers after the route DOM has been replaced,
+    // otherwise a return to `/` leaves the new reveal elements hidden
+    // while the triggers still reference the previous homepage nodes.
+    dependencies: [pathname],
+    revertOnUpdate: true,
+  });
 
   return null;
 }
