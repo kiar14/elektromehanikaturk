@@ -73,17 +73,16 @@ export function Hero() {
              the trust line is never permanently sitting underneath it. */}
       <div className="shell relative z-30 pt-[calc(4.75rem+38dvh)] pb-[calc(5.25rem+env(safe-area-inset-bottom))] md:pb-16 lg:pt-32 lg:pb-32">
         <div className="max-w-[34rem] lg:max-w-[38rem]">
-          <h1 className="text-[2.75rem] leading-[0.98] font-semibold text-white sm:text-[3.5rem] lg:text-[4.25rem] xl:text-[4.75rem]">
-            Klima ne hladi?{" "}
-            {/* Slight offset gives the second line a little character. The
-                space above is invisible in a block layout but keeps the
-                accessible name from reading "hladi?Popravimo". */}
-            <span className="mt-1 block lg:ml-[0.14em]">Popravimo jo.</span>
+          <h1 className="text-[clamp(2.125rem,9.4vw,2.75rem)] leading-[0.98] font-semibold text-white sm:text-[3.5rem] lg:text-[4.25rem] xl:text-[4.75rem]">
+            <span className="block whitespace-nowrap">Ko mora tehnika{" "}</span>
+            <span className="mt-1 block whitespace-nowrap">
+              preprosto delovati.
+            </span>
           </h1>
 
           <p className="mt-6 max-w-[30rem] text-[1.0625rem] leading-relaxed text-white/80 sm:text-[1.125rem]">
-            Servis in montaža klimatskih naprav po Dolenjski in Posavju. Uradni
-            serviser vodilnih znamk.
+            Servis, montaža in prodaja klimatskih naprav, toplotnih črpalk,
+            bele tehnike in hladilne opreme.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center lg:mt-9">
