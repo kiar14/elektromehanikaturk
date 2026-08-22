@@ -13,7 +13,13 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { ActionLink } from "@/components/ui/actions";
-import { PRIMARY_NAV, ROUTES, SERVICES_NAV, SHOP_NAV } from "@/lib/navigation";
+import {
+  PRIMARY_NAV,
+  ROUTES,
+  SERVICES_NAV,
+  SERVICES_SECTION_HREF,
+  SHOP_NAV,
+} from "@/lib/navigation";
 import { PRIMARY_PHONE, SITE } from "@/lib/site";
 import { pauseScroll, resumeScroll } from "@/lib/scroll";
 
@@ -78,7 +84,7 @@ export function MobileNavigation() {
           >
             <MenuGroup
               title="Storitve"
-              href="/storitve"
+              href={SERVICES_SECTION_HREF}
               links={MOBILE_SERVICES}
               onNavigate={() => setOpen(false)}
             />

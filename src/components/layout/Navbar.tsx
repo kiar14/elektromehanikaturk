@@ -182,24 +182,31 @@ export function Navbar() {
               return (
                 <div
                   key={item.label}
-                  className="relative"
+                  className="relative flex items-center"
                   onMouseEnter={() => {
                     cancelClose();
                     setOpenMenu(item.label);
                   }}
                 >
+                  <Link
+                    href={item.href}
+                    onClick={() => setOpenMenu(null)}
+                    className="rounded-l-md py-2 pr-1 pl-2.5 text-[0.8125rem] font-medium whitespace-nowrap text-on-dark/85 transition-colors hover:text-white"
+                  >
+                    {item.label}
+                  </Link>
                   <button
                     type="button"
                     data-menu-trigger={item.label}
+                    aria-label={`Odpri meni: ${item.label}`}
                     aria-expanded={openMenu === item.label}
                     aria-controls={`menu-${slug(item.label)}`}
                     aria-haspopup="true"
                     onClick={() =>
                       setOpenMenu(openMenu === item.label ? null : item.label)
                     }
-                    className="flex items-center gap-1 rounded-md px-2.5 py-2 text-[0.8125rem] font-medium whitespace-nowrap text-on-dark/85 transition-colors hover:text-white"
+                    className="flex size-8 items-center justify-center rounded-r-md text-on-dark/85 transition-colors hover:bg-white/10 hover:text-white"
                   >
-                    {item.label}
                     <ChevronDown
                       aria-hidden="true"
                       className={cn(

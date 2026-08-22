@@ -9,6 +9,8 @@ export type NavLink = {
   description?: string;
 };
 
+export const SERVICES_SECTION_HREF = "/#storitve";
+
 export const SERVICES_NAV: NavLink[] = [
   {
     label: "Servis klimatskih naprav",
@@ -63,7 +65,12 @@ export const PRIMARY_NAV: {
   children?: NavLink[];
   layout?: "mega" | "list";
 }[] = [
-  { label: "Storitve", href: "/storitve", children: SERVICES_NAV, layout: "mega" },
+  {
+    label: "Storitve",
+    href: SERVICES_SECTION_HREF,
+    children: SERVICES_NAV,
+    layout: "mega",
+  },
   { label: "Trgovina", href: "/trgovina", children: SHOP_NAV, layout: "list" },
   { label: "Cenik", href: "/cenik" },
   { label: "Izračun moči", href: "/izracun-moci" },
