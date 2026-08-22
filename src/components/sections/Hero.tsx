@@ -73,7 +73,7 @@ export function Hero() {
              the trust line is never permanently sitting underneath it. */}
       <div className="shell relative z-30 pt-[calc(4.75rem+38dvh)] pb-[calc(5.25rem+env(safe-area-inset-bottom))] md:pb-16 lg:pt-32 lg:pb-32">
         <div className="max-w-[34rem] lg:max-w-[38rem]">
-          <h1 className="text-[clamp(2.125rem,9.4vw,2.75rem)] leading-[0.98] font-semibold text-white sm:text-[3.5rem] lg:text-[4.25rem] xl:text-[4.75rem]">
+          <h1 className="text-[clamp(1.8rem,9vw,2.75rem)] leading-[0.98] font-semibold text-white sm:text-[3.5rem] lg:text-[4.25rem] xl:text-[4.75rem]">
             <span className="block whitespace-nowrap">Ko mora tehnika{" "}</span>
             <span className="mt-1 block whitespace-nowrap">
               preprosto delovati.

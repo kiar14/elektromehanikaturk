@@ -120,14 +120,27 @@
     @apply font-sans;
     /* Lenis drives scrolling; native smooth would fight it. */
     scroll-behavior: auto;
+    max-width: 100%;
+    /* Safari historically treats body overflow differently from the
+       root scroller, so keep a hidden fallback on both root boxes. */
+    overflow-x: hidden;
   }
 
   body {
     @apply bg-base text-ink;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    /* Stop any absolutely-positioned layer from widening the page. */
-    overflow-x: clip;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* `clip` avoids creating a horizontal scroll container in modern
+     browsers; the hidden declarations above remain the iOS fallback. */
+  @supports (overflow-x: clip) {
+    html,
+    body {
+      overflow-x: clip;
+    }
   }
 
   /* Editorial headline defaults — tight tracking. */

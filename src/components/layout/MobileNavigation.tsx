@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/sheet";
 import { ActionLink } from "@/components/ui/actions";
 import { PRIMARY_NAV, ROUTES, SERVICES_NAV, SHOP_NAV } from "@/lib/navigation";
-import { PHONES, SITE } from "@/lib/site";
+import { PRIMARY_PHONE, SITE } from "@/lib/site";
 import { pauseScroll, resumeScroll } from "@/lib/scroll";
 
 const FLAT_LINKS = PRIMARY_NAV.filter((item) => !item.children);
@@ -74,7 +74,7 @@ export function MobileNavigation() {
 
           <nav
             aria-label="Mobilna navigacija"
-            className="flex-1 overflow-y-auto overscroll-contain px-5 py-6"
+            className="flex-1 overflow-y-auto overscroll-contain px-5 py-5"
           >
             <MenuGroup
               title="Storitve"
@@ -89,41 +89,30 @@ export function MobileNavigation() {
               onNavigate={() => setOpen(false)}
             />
 
-            <ul className="mt-8 grid gap-1 border-t border-line-dark pt-6">
+            <ul className="mt-5 grid gap-0.5 border-t border-line-dark pt-5">
               {FLAT_LINKS.map((item) => (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      onClick={() => setOpen(false)}
-                      className="block py-2.5 text-lg font-medium text-on-dark transition-colors duration-150 hover:text-white"
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    onClick={() => setOpen(false)}
+                    className="block py-2 text-[1.0625rem] font-medium text-on-dark transition-colors duration-150 hover:text-white"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
 
-            <div className="mt-8 border-t border-line-dark pt-6">
-              <p className="text-[0.6875rem] font-medium tracking-[0.16em] text-on-dark-2 uppercase">
-                Pokličite nas
-              </p>
-              <ul className="mt-3 grid gap-2">
-                {PHONES.map((phone) => (
-                  <li key={phone.tel}>
-                    <a
-                      href={`tel:${phone.tel}`}
-                      className="nums inline-flex items-center gap-2.5 text-[1.0625rem] font-medium text-on-dark transition-colors duration-150 hover:text-white"
-                    >
-                      <Phone aria-hidden="true" className="size-4 text-on-dark-2" />
-                      {phone.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
           </nav>
 
-          <div className="border-t border-line-dark p-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))]">
+          <div className="grid gap-3 border-t border-line-dark px-5 pt-4 pb-[calc(1.25rem+env(safe-area-inset-bottom))]">
+            <a
+              href={`tel:${PRIMARY_PHONE.tel}`}
+              className="nums inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-[10px] border border-white/20 text-[1rem] font-medium text-on-dark transition-colors duration-200 hover:border-white/35 hover:bg-white/10 hover:text-white"
+            >
+              <Phone aria-hidden="true" className="size-4 text-on-dark-2" />
+              {PRIMARY_PHONE.label}
+            </a>
             <ActionLink
               href={ROUTES.booking}
               variant="brand"
@@ -154,7 +143,7 @@ function MenuGroup({
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <div className="mb-8">
+    <div className="mb-6">
       <div className="flex items-center justify-between gap-3">
         <Link
           href={href}

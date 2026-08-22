@@ -16,7 +16,7 @@ export function Services() {
     <section
       id="storitve"
       data-services-sequence
-      className="scroll-mt-24 bg-base py-20 sm:py-24 lg:py-32"
+      className="scroll-mt-24 overflow-x-hidden bg-base py-20 supports-[overflow:clip]:overflow-x-clip sm:py-24 lg:py-32"
     >
       <div className="shell">
         {/* The heading and the four cards are choreographed together by
@@ -64,8 +64,8 @@ function ServiceEntry({
     // cards whose titles and blurbs wrap to different heights.
     // The whole article is the animated unit, so the photograph, title,
     // copy and link all arrive together as one composed object.
-    <article data-service-card data-enter={enter} className="h-full">
-      <Link href={service.href} className="group flex h-full flex-col">
+    <article data-service-card data-enter={enter} className="h-full min-w-0">
+      <Link href={service.href} className="group flex h-full min-w-0 flex-col">
         <div className="relative aspect-[3/2] overflow-hidden rounded-[12px] bg-mist">
           <Image
             src={service.image}
