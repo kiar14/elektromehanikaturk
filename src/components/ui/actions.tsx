@@ -30,7 +30,7 @@ const variants = {
 
 const sizes = {
   md: "h-11 px-5 text-[0.9375rem]",
-  lg: "h-[3.25rem] px-7 text-base",
+  lg: "h-[3.25rem] px-7 text-[1rem]",
 } as const;
 
 type ActionVariant = keyof typeof variants;

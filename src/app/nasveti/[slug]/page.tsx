@@ -190,7 +190,7 @@ export default async function ArticlePage({ params }: Props) {
           actions={
             <>
               <ActionLink href={ROUTES.acCalculator} size="lg">
-                Izračun moči klime
+                Izračun moči
               </ActionLink>
               <ActionLink
                 href={`tel:${PRIMARY_PHONE.tel}`}

@@ -1,6 +1,20 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      {
+        source: "/izracun-moci-klime",
+        destination: "/izracun-moci",
+        permanent: true,
+      },
+      {
+        source: "/orodja",
+        destination: "/izracun-moci",
+        permanent: true,
+      },
+    ];
+  },
   images: {
     // Next 16 only honours `quality` values declared here; anything else
     // silently falls back to 75. The hero is a dark, softly graded

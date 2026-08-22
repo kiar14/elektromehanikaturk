@@ -36,6 +36,18 @@ const optionalEmail = z
     "Vnesite veljaven e-poštni naslov.",
   );
 
+const optionalPhone = z
+  .string()
+  .trim()
+  .refine(
+    (value) => value === "" || (value.match(/\d/g) ?? []).length >= 8,
+    "Telefonska številka je prekratka.",
+  )
+  .refine(
+    (value) => value === "" || /^[+\d][\d\s()/.-]*$/.test(value),
+    "Uporabite samo številke, presledke in znake + ( ) - /",
+  );
+
 export const quickBookingSchema = z.object({
   ime: name,
   telefon: phone,
@@ -109,7 +121,21 @@ export const serviceOrderSchema = z.object({
     .max(2000, "Opis je predolg."),
 });
 
+export const calculatorInquirySchema = z
+  .object({
+    ime: name,
+    telefon: optionalPhone,
+    email: optionalEmail,
+    opombe: z.string().trim().max(1500, "Opombe so predolge."),
+    marketing: z.boolean(),
+  })
+  .refine((values) => values.telefon !== "" || values.email !== "", {
+    message: "Vnesite telefonsko številko ali e-poštni naslov.",
+    path: ["telefon"],
+  });
+
 export type QuickBookingValues = z.infer<typeof quickBookingSchema>;
 export type ServiceEnquiryValues = z.infer<typeof serviceEnquirySchema>;
 export type ContactValues = z.infer<typeof contactSchema>;
 export type ServiceOrderValues = z.infer<typeof serviceOrderSchema>;
+export type CalculatorInquiryValues = z.infer<typeof calculatorInquirySchema>;

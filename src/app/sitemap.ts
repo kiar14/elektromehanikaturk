@@ -21,7 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...PRODUCTS.map((product) => productHref(product)),
     ...SERVICE_PAGES.map((service) => `/storitve/${service.slug}`),
     "/cenik",
-    "/izracun-moci-klime",
+    "/izracun-moci",
     "/nasveti",
     ...ARTICLES.map((article) => articleHref(article.slug)),
     "/pogosta-vprasanja",

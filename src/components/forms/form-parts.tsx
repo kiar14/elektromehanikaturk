@@ -89,7 +89,7 @@ export function Field({
 /** Shared control styling. Keeps 16px on mobile so iOS never zooms in. */
 export function controlClass(tone: Tone, className?: string) {
   return cn(
-    "w-full rounded-[8px] border px-4 text-base transition-colors duration-200",
+    "w-full rounded-[8px] border px-4 text-[1rem] transition-colors duration-200",
     // 16px on mobile so iOS never zooms the field on focus. `md:` is
     // repeated to outrank the primitive's own `md:text-sm`.
     "focus-visible:ring-0 sm:text-[0.9375rem] md:text-[0.9375rem]",
