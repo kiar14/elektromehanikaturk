@@ -71,7 +71,9 @@ export const PRIMARY_NAV: {
     href: "/storitve/svetovanje-na-daljavo",
   },
   { label: "Nasveti", href: "/nasveti" },
+  { label: "Pogosta vprašanja", href: "/pogosta-vprasanja" },
   { label: "O nas", href: "/o-nas" },
+  { label: "Kontakt", href: "/kontakt" },
 ];
 
 export const ROUTES = {

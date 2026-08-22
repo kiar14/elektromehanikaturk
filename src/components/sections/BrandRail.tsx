@@ -39,7 +39,7 @@ export function BrandRail() {
 
       <div className="mt-10 grid gap-4 sm:gap-6">
         <BrandRow brands={TOP_ROW} duration="36s" />
-        <BrandRow brands={BOTTOM_ROW} duration="43s" reverse />
+        <BrandRow brands={BOTTOM_ROW} duration="43s" reverse ariaHidden />
       </div>
     </div>
   );
@@ -49,13 +49,16 @@ function BrandRow({
   brands,
   duration,
   reverse = false,
+  ariaHidden = false,
 }: {
   brands: Brand[];
   duration: string;
   reverse?: boolean;
+  ariaHidden?: boolean;
 }) {
   return (
     <div
+      aria-hidden={ariaHidden || undefined}
       className={cn(
         "brand-row relative overflow-hidden",
         // Gentle fade at both ends so marks leave the frame instead of
@@ -73,7 +76,7 @@ function BrandRow({
             <BrandMark
               key={`${copy}-${brand.name}`}
               brand={brand}
-              clone={copy === 1}
+              clone={ariaHidden || copy === 1}
             />
           )),
         )}
@@ -92,7 +95,7 @@ function BrandMark({ brand, clone }: { brand: Brand; clone: boolean }) {
     >
       <Image
         src={brand.file}
-        alt={clone ? "" : `${brand.name} — uradni serviser in prodajalec`}
+        alt={clone ? "" : `${brand.name} - uradni serviser in prodajalec`}
         width={brand.w}
         height={brand.h}
         // 2–15 KB each and already sized; the optimizer would add cost.

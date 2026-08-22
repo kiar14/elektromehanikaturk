@@ -197,7 +197,7 @@ export function Navbar() {
                     onClick={() =>
                       setOpenMenu(openMenu === item.label ? null : item.label)
                     }
-                    className="flex items-center gap-1 rounded-md px-3 py-2 text-[0.875rem] font-medium text-on-dark/85 transition-colors hover:text-white"
+                    className="flex items-center gap-1 rounded-md px-2.5 py-2 text-[0.8125rem] font-medium whitespace-nowrap text-on-dark/85 transition-colors hover:text-white 2xl:px-3 2xl:text-[0.875rem]"
                   >
                     {item.label}
                     <ChevronDown
@@ -247,7 +247,7 @@ export function Navbar() {
                 key={item.href}
                 href={item.href}
                 onMouseEnter={scheduleClose}
-                className="rounded-md px-3 py-2 text-[0.875rem] font-medium whitespace-nowrap text-on-dark/85 transition-colors hover:text-white"
+                className="rounded-md px-2.5 py-2 text-[0.8125rem] font-medium whitespace-nowrap text-on-dark/85 transition-colors hover:text-white 2xl:px-3 2xl:text-[0.875rem]"
               >
                 {item.label}
               </Link>
@@ -268,7 +268,7 @@ export function Navbar() {
           <ActionLink
             href={ROUTES.booking}
             variant="brand"
-            className="ml-1 hidden h-10 px-4 text-[0.875rem] xl:inline-flex"
+            className="ml-1 hidden h-10 px-3 text-[0.8125rem] xl:inline-flex 2xl:px-4 2xl:text-[0.875rem]"
           >
             Naroči servis
           </ActionLink>

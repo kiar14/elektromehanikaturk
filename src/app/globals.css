@@ -242,6 +242,30 @@
   }
 }
 
+/* Inner-page headers enter without waiting for the deferred GSAP bundle.
+   This keeps the route title visible immediately after navigation while
+   preserving the same restrained rise used by the wider reveal system. */
+@keyframes page-hero-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.page-hero-enter {
+  animation: page-hero-enter 0.65s var(--ease-out-soft) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-hero-enter {
+    animation: none;
+  }
+}
+
 /* ============================================================
    Brand marquee — two tracks, opposite directions.
 

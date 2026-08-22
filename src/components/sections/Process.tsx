@@ -1,5 +1,7 @@
 import { PROCESS_STEPS } from "@/lib/content";
 
+type ProcessStep = { title: string; body: string };
+
 /**
  * One continuous rule with four nodes sitting on it.
  *
@@ -15,14 +17,22 @@ import { PROCESS_STEPS } from "@/lib/content";
  * fades the nodes and copy in document order, so the sequence reads
  * line → 01 → 02 → 03 → 04. One owner, no extra client component.
  */
-export function Process() {
+export function Process({
+  eyebrow = "Postopek",
+  title = "Kako poteka servis",
+  steps = PROCESS_STEPS,
+}: {
+  eyebrow?: string;
+  title?: string;
+  steps?: readonly ProcessStep[];
+} = {}) {
   return (
     <section className="bg-base py-20 sm:py-24 lg:py-32">
       <div className="shell">
         <header className="mx-auto max-w-3xl text-center" data-reveal>
-          <p className="eyebrow eyebrow-center">Postopek</p>
+          <p className="eyebrow eyebrow-center">{eyebrow}</p>
           <h2 className="mt-5 text-[2.75rem] leading-[1.03] sm:text-[3.25rem] lg:text-[3.75rem]">
-            Kako poteka servis
+            {title}
           </h2>
         </header>
 
@@ -36,14 +46,14 @@ export function Process() {
           />
 
           <ol className="grid gap-y-10 lg:grid-cols-4 lg:gap-x-8 lg:gap-y-0">
-            {PROCESS_STEPS.map((step, index) => (
+            {steps.map((step, index) => (
               <li
                 key={step.title}
                 className="relative flex gap-6 lg:flex-col lg:items-center lg:gap-0 lg:text-center"
               >
                 {/* Mobile segment: from below this node into the gap
                     above the next one. Omitted on the last step. */}
-                {index < PROCESS_STEPS.length - 1 ? (
+                {index < steps.length - 1 ? (
                   <span
                     aria-hidden="true"
                     className="absolute top-[3.75rem] bottom-[-2.5rem] left-[1.875rem] w-px -translate-x-1/2 bg-line-2 lg:hidden"
