@@ -66,10 +66,10 @@ export const PRIMARY_NAV: {
   { label: "Storitve", href: "/storitve", children: SERVICES_NAV, layout: "mega" },
   { label: "Trgovina", href: "/trgovina", children: SHOP_NAV, layout: "list" },
   { label: "Cenik", href: "/cenik" },
-  {
-    label: "Svetovanje na daljavo",
-    href: "/storitve/svetovanje-na-daljavo",
-  },
+  // Named for what it does, not for the category it belongs to. "Orodja"
+  // would tell a visitor nothing at the moment they are deciding which
+  // unit to buy.
+  { label: "Izračun moči klime", href: "/izracun-moci-klime" },
   { label: "Nasveti", href: "/nasveti" },
   { label: "Pogosta vprašanja", href: "/pogosta-vprasanja" },
   { label: "O nas", href: "/o-nas" },
@@ -84,6 +84,7 @@ export const ROUTES = {
   contact: "/kontakt",
   advice: "/nasveti",
   remoteAdvice: "/storitve/svetovanje-na-daljavo",
+  acCalculator: "/izracun-moci-klime",
   cart: "/kosarica",
 } as const;
 

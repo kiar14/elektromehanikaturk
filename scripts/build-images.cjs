@@ -39,6 +39,36 @@ const JOBS = [
   // the height of the mark itself.
   { src: ".assets-src/emt-logo-white.png", dst: "public/images/emt-logo-white.webp", w: 800, q: 92, trim: true },
   { src: ".assets-src/nacini-placila.webp", dst: "public/images/nacini-placila.webp", w: 520, q: 85 },
+
+  // Nasveti article photography. Royalty-free sources, downloaded once and
+  // stored in .assets-src rather than hotlinked — see the source note in
+  // src/content/nasveti.ts. Everything is normalised to 3:2 at 1400px:
+  // the card renders at roughly a third of the shell and the article hero
+  // at ~900px, so a single asset covers both without upscaling.
+  ...[
+    "idealna-temperatura-klime-poleti",
+    "kam-namestiti-notranjo-enoto-klime",
+    "split-ali-multi-split-klima",
+    "ogrevanje-s-klimo-pozimi",
+    "zakaj-pomivalni-stroj-ne-pomiva-dobro",
+    // Portrait source (2400x3600). A plain centre crop clips the tumble
+    // dryer at the frame edge, so the 3:2 window is placed by hand around
+    // the appliance column with the shelving left in for context.
+    {
+      slug: "napake-pri-uporabi-susilnega-stroja",
+      extract: { left: 150, top: 900, width: 2250, height: 1500 },
+    },
+  ].map((entry) => {
+    const slug = typeof entry === "string" ? entry : entry.slug;
+    return {
+      src: `${PHOTO_DIR}/nasveti/${slug}.jpg`,
+      dst: `public/images/nasveti/${slug}.webp`,
+      w: 1400,
+      h: 933,
+      q: 82,
+      extract: typeof entry === "string" ? undefined : entry.extract,
+    };
+  }),
 ];
 
 async function build() {
@@ -50,8 +80,13 @@ async function build() {
     fs.mkdirSync(path.dirname(job.dst), { recursive: true });
     let pipe = sharp(job.src);
     if (job.trim) pipe = pipe.trim({ threshold: 2 });
+    if (job.extract) pipe = pipe.extract(job.extract);
     await pipe
-      .resize({ width: job.w, withoutEnlargement: true })
+      .resize(
+        job.h
+          ? { width: job.w, height: job.h, fit: "cover" }
+          : { width: job.w, withoutEnlargement: true },
+      )
       .webp({ quality: job.q, alphaQuality: 100, effort: 6 })
       .toFile(job.dst);
     console.log(`${job.dst}  ${(fs.statSync(job.dst).size / 1024).toFixed(0)}KB`);

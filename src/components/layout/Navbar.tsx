@@ -197,7 +197,7 @@ export function Navbar() {
                     onClick={() =>
                       setOpenMenu(openMenu === item.label ? null : item.label)
                     }
-                    className="flex items-center gap-1 rounded-md px-2.5 py-2 text-[0.8125rem] font-medium whitespace-nowrap text-on-dark/85 transition-colors hover:text-white 2xl:px-3 2xl:text-[0.875rem]"
+                    className="flex items-center gap-1 rounded-md px-2.5 py-2 text-[0.8125rem] font-medium whitespace-nowrap text-on-dark/85 transition-colors hover:text-white"
                   >
                     {item.label}
                     <ChevronDown
@@ -247,7 +247,7 @@ export function Navbar() {
                 key={item.href}
                 href={item.href}
                 onMouseEnter={scheduleClose}
-                className="rounded-md px-2.5 py-2 text-[0.8125rem] font-medium whitespace-nowrap text-on-dark/85 transition-colors hover:text-white 2xl:px-3 2xl:text-[0.875rem]"
+                className="rounded-md px-2.5 py-2 text-[0.8125rem] font-medium whitespace-nowrap text-on-dark/85 transition-colors hover:text-white"
               >
                 {item.label}
               </Link>
@@ -256,9 +256,14 @@ export function Navbar() {
         </nav>
 
         <div className="col-start-2 flex shrink-0 items-center gap-0.5 justify-self-end xl:col-start-3">
+          {/* The centre column is the nav at its natural width and the two
+              outer columns split what is left. Below ~1460px the utility
+              side needs more than its half and starts crowding the last nav
+              item, so the phone drops out first — it is repeated in the
+              footer, the mobile bar and every page CTA. */}
           <a
             href={`tel:${PRIMARY_PHONE.tel}`}
-            className="hidden items-center gap-2 rounded-md px-2 py-2 text-[0.875rem] font-medium whitespace-nowrap text-on-dark/85 transition-colors hover:text-white min-[1400px]:flex"
+            className="hidden items-center gap-2 rounded-md px-2 py-2 text-[0.875rem] font-medium whitespace-nowrap text-on-dark/85 transition-colors hover:text-white min-[1460px]:flex"
           >
             <Phone aria-hidden="true" className="size-4" />
             <span className="nums">{PRIMARY_PHONE.label}</span>

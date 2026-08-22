@@ -18,9 +18,10 @@ import { PHONES, SITE } from "@/lib/site";
 import { pauseScroll, resumeScroll } from "@/lib/scroll";
 
 const FLAT_LINKS = PRIMARY_NAV.filter((item) => !item.children);
-const MOBILE_SERVICES = SERVICES_NAV.filter(
-  (item) => item.href !== ROUTES.remoteAdvice,
-);
+// Svetovanje na daljavo used to be filtered out here because it also sat in
+// the top-level bar. That duplicate is gone, so the Storitve group is the
+// only place it appears and has to list it.
+const MOBILE_SERVICES = SERVICES_NAV;
 
 export function MobileNavigation() {
   const [open, setOpen] = useState(false);
