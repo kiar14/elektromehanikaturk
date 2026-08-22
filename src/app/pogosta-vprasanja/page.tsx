@@ -8,13 +8,14 @@ import { ActionLink } from "@/components/ui/actions";
 import { breadcrumbSchema } from "@/lib/structured-data";
 import { PRIMARY_PHONE } from "@/lib/site";
 import { getMeaningfulFaqItems } from "@/lib/faq";
+import { socialMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = socialMetadata({
   title: "Pogosta vprašanja",
   description:
     "Odgovori na pogosta vprašanja o servisu, nakupu, plačilu, dostavi, montaži in svetovanju Elektromehanike Turk.",
-  alternates: { canonical: "/pogosta-vprasanja" },
-};
+  path: "/pogosta-vprasanja",
+});
 
 const FAQS: FaqItem[] = [
   {

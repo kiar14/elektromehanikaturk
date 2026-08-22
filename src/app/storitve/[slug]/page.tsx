@@ -5,6 +5,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { ServicePageTemplate } from "@/components/services/ServicePageTemplate";
 import { SERVICE_PAGE_BY_SLUG, SERVICE_PAGES } from "@/content/storitve";
 import { getMeaningfulFaqItems } from "@/lib/faq";
+import { socialMetadata } from "@/lib/metadata";
 import { SITE } from "@/lib/site";
 import { breadcrumbSchema } from "@/lib/structured-data";
 
@@ -24,17 +25,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const canonical = `/storitve/${service.slug}`;
 
-  return {
+  return socialMetadata({
     title: service.title,
     description: service.metaDescription,
-    alternates: { canonical },
-    openGraph: {
-      title: service.title,
-      description: service.metaDescription,
-      url: canonical,
-      images: [{ url: service.image, alt: service.alt }],
-    },
-  };
+    path: canonical,
+    image: { url: service.image, alt: service.alt },
+  });
 }
 
 export default async function ServicePage({ params }: Props) {

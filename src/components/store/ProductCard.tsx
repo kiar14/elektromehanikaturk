@@ -74,10 +74,14 @@ export function ProductCard({
               </span>
             ) : null}
           </p>
-          <div className="mt-4 flex items-center justify-between gap-3">
+          {/* Wraps as a row rather than letting the link break mid-phrase:
+              below roughly 300px of card the label and the button no
+              longer fit side by side, and "Poglej / izdelek" over two
+              lines reads worse than the button dropping beneath it. */}
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-x-3 gap-y-2.5">
             <Link
               href={href}
-              className="group/link inline-flex items-center gap-1.5 text-[0.8125rem] font-semibold text-ink-2 transition-colors hover:text-brand"
+              className="group/link inline-flex items-center gap-1.5 text-[0.8125rem] font-semibold whitespace-nowrap text-ink-2 transition-colors hover:text-brand"
             >
               Poglej izdelek
               <ArrowRight

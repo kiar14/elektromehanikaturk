@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 
 import { ShopCatalogFromQuery } from "@/components/store/ShopCatalog";
+import { socialMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = socialMetadata({
   title: "Trgovina",
   description:
     "Klimatske naprave, bela tehnika ter hladilna in gostinska oprema iz ponudbe Elektromehanike Turk.",
-  alternates: { canonical: "/trgovina" },
-};
+  path: "/trgovina",
+});
 
 export default function ShopPage() {
   return (

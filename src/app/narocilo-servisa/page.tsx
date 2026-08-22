@@ -6,13 +6,14 @@ import { PageHero } from "@/components/layout/PageHero";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { breadcrumbSchema } from "@/lib/structured-data";
 import { PRIMARY_PHONE } from "@/lib/site";
+import { socialMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = socialMetadata({
   title: "Naročilo servisa",
   description:
     "Oddajte povpraševanje za servis klimatske naprave, bele tehnike, toplotne črpalke ali gostinske opreme.",
-  alternates: { canonical: "/narocilo-servisa" },
-};
+  path: "/narocilo-servisa",
+});
 
 export default function ServiceOrderPage() {
   const breadcrumb = breadcrumbSchema([

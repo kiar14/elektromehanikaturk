@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
 
+import { socialMetadata } from "@/lib/metadata";
 import { MotionRoot } from "@/components/motion/MotionRoot";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -26,44 +27,26 @@ const geist = Geist({
   display: "swap",
 });
 
+const HOME_TITLE =
+  "Servis in prodaja klim, toplotnih črpalk in bele tehnike | Dolenjska";
+const HOME_DESCRIPTION =
+  "Servis in montaža klimatskih naprav, toplotnih črpalk, bele tehnike ter gostinske opreme na Dolenjskem in v Posavju. Uradni serviser vodilnih znamk. Pokličite 07 30 99 010.";
+
+const home = socialMetadata({
+  title: HOME_TITLE,
+  description: HOME_DESCRIPTION,
+  path: "/",
+  appendSiteName: false,
+});
+
 export const metadata: Metadata = {
+  ...home,
   metadataBase: new URL(SITE.url),
-  title: {
-    default:
-      "Servis in prodaja klim, toplotnih črpalk in bele tehnike | Dolenjska",
-    template: `%s | ${SITE.name}`,
-  },
-  description:
-    "Servis in montaža klimatskih naprav, toplotnih črpalk, bele tehnike ter gostinske opreme na Dolenjskem in v Posavju. Uradni serviser vodilnih znamk. Pokličite 07 30 99 010.",
+  // The default doubles as the fallback `og:title` for any route that
+  // does not build its own social block.
+  title: { default: HOME_TITLE, template: `%s | ${SITE.name}` },
   applicationName: SITE.name,
   authors: [{ name: SITE.name }],
-  alternates: { canonical: "/" },
-  openGraph: {
-    type: "website",
-    locale: "sl_SI",
-    siteName: SITE.name,
-    url: SITE.url,
-    title:
-      "Servis in prodaja klim, toplotnih črpalk in bele tehnike | Dolenjska",
-    description:
-      "Servis in montaža klimatskih naprav, toplotnih črpalk in bele tehnike na Dolenjskem in v Posavju. Uradni serviser vodilnih znamk.",
-    images: [
-      {
-        url: "/images/og-emt.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Klimatska naprava v spalnici — Elektromehanika Turk.",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title:
-      "Servis in prodaja klim, toplotnih črpalk in bele tehnike | Dolenjska",
-    description:
-      "Servis in montaža klimatskih naprav, toplotnih črpalk in bele tehnike na Dolenjskem in v Posavju.",
-    images: ["/images/og-emt.jpg"],
-  },
   robots: { index: true, follow: true },
 };
 

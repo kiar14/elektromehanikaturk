@@ -48,6 +48,18 @@ export type ServicePricing =
   | QuotePrice
   | RemoteSteps;
 
+/**
+ * A short shortlist of store products worth seeing alongside a service.
+ * Products are referenced by id only: names, prices, images and routes
+ * stay owned by src/lib/products.ts. Services with nothing genuinely
+ * relevant in the catalogue simply omit this — the section is not
+ * rendered rather than filled with something unrelated.
+ */
+export type ServiceProducts = {
+  heading: string;
+  productIds: string[];
+};
+
 export type ServicePageData = {
   slug: string;
   eyebrow: string;
@@ -62,6 +74,7 @@ export type ServicePageData = {
     items: string[];
   }[];
   pricing: ServicePricing;
+  products?: ServiceProducts;
   brands?: string[];
   faqs: FaqItem[];
   primaryAction: ServiceAction;
@@ -118,6 +131,15 @@ export const SERVICE_PAGES: ServicePageData[] = [
       ],
       note: "Servis ni vezan na znamko klimatske naprave. Po oddaji naročila vas pokličemo za uskladitev termina.",
     },
+    products: {
+      heading: "Priporočene naprave",
+      productIds: [
+        "mitsubishi-msz-hr35vfk2",
+        "mitsubishi-msz-hr71vfk2",
+        "mw-power-alfa-12k",
+        "mw-power-alfa-24k",
+      ],
+    },
     brands: ["Daikin", "Mitsubishi Electric", "MW Power", "Samsung", "Toshiba"],
     faqs: [
       {
@@ -171,6 +193,15 @@ export const SERVICE_PAGES: ServicePageData[] = [
       body: "Cene izbranih klimatskih naprav v trgovini že vključujejo montažo, kjer je to navedeno pri izdelku.",
       productId: "mw-power-alfa-12k",
     },
+    products: {
+      heading: "Priporočene naprave",
+      productIds: [
+        "mitsubishi-msz-hr35vfk2",
+        "mitsubishi-msz-hr71vfk2",
+        "mw-power-alfa-12k",
+        "mw-power-alfa-24k",
+      ],
+    },
     brands: ["Daikin", "Mitsubishi Electric", "MW Power", "Samsung", "Toshiba"],
     faqs: [
       {
@@ -223,6 +254,14 @@ export const SERVICE_PAGES: ServicePageData[] = [
         { title: "Diagnostika malih aparatov", price: "17,08 € z DDV" },
         { title: "Diagnostika velikih aparatov", price: "30,50 € z DDV" },
         { title: "Popravilo velikih aparatov", price: "42,70 € do 91,50 € z DDV", detail: "Glede na zahtevnost popravila." },
+      ],
+    },
+    products: {
+      heading: "Poglejte tudi",
+      productIds: [
+        "bosch-wqb246dnby",
+        "bosch-kgn49ocaf",
+        "bosch-pvs611b16e",
       ],
     },
     brands: ["AEG", "Beko", "Bosch", "Electrolux", "Liebherr", "Samsung", "Siemens", "Zanussi"],
@@ -331,6 +370,13 @@ export const SERVICE_PAGES: ServicePageData[] = [
         label: "Poglejte ponudbo",
         href: "/trgovina?kategorija=Gostinska%20in%20hladilna%20oprema#vsi-izdelki",
       },
+    },
+    products: {
+      heading: "Priporočene naprave",
+      productIds: [
+        "alpfrigo-cm-700-b",
+        "alpfrigo-cn-700-b",
+      ],
     },
     brands: ["Alpfrigo", "Elmont", "Icematic", "Liebherr"],
     faqs: [

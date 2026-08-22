@@ -303,7 +303,7 @@
 }
 
 /* ============================================================
-   Brand marquee — two tracks, opposite directions.
+   Brand marquee — one continuous track.
 
    Structure adapted from Magic UI's Marquee (the duplicated-sequence
    approach), but the spacing lives in each item's padding rather than a
@@ -328,11 +328,6 @@
   align-items: center;
   animation: brand-track var(--brand-duration, 38s) linear infinite;
   will-change: transform;
-}
-
-/* Bottom row runs the other way. */
-.brand-track--reverse {
-  animation-direction: reverse;
 }
 
 .brand-row:hover .brand-track,

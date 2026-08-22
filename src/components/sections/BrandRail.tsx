@@ -5,31 +5,24 @@ import { cn } from "@/lib/utils";
 import { BRANDS, type Brand } from "@/lib/content";
 
 /**
- * Two continuous brand tracks running in opposite directions.
+ * One continuous brand track.
  *
- * Every row carries the full set of fifteen logos rather than half each.
- * A marquee only loops without a visible gap while one sequence is at
- * least as wide as the viewport, and half the set is around 1600px —
- * short of a 1920px screen. The full set is roughly 3200px, so both rows
- * stay filled at every width. The bottom row is reordered so the two
- * tracks never read as the same line twice.
+ * It used to be two rows running in opposite directions, but with only
+ * fifteen marks to spend both rows had to carry the full set — a marquee
+ * loops without a visible gap only while one sequence is at least as
+ * wide as the viewport, and half the set is around 1600px, short of a
+ * 1920px screen. So every logo appeared twice on screen at once and the
+ * second row read as a copy of the first rather than as more brands.
+ * A single row says the same thing once.
+ *
+ * The full set is roughly 3400px at the spacing below, so one sequence
+ * still overflows the widest common viewport and the -50% loop stays
+ * seamless.
  *
  * Pure CSS: no rAF loop, no client component. See `.brand-track` in
- * globals.css for the seam-free -50% translation and the reduced-motion
+ * globals.css for the seam-free translation and the reduced-motion
  * fallback.
  */
-const TOP_ROW = BRANDS;
-// Interleaved rather than rotated. Both rows hold the full set, so the
-// same mark is occasionally on screen twice; a rotation keeps runs of
-// logos in the same relative order, which makes those repeats line up
-// vertically. Splitting odds from evens breaks the runs, so the rows
-// never read as two copies of one line. Deterministic, so SSR and the
-// client agree.
-const BOTTOM_ROW = [
-  ...BRANDS.filter((_, i) => i % 2 === 1),
-  ...BRANDS.filter((_, i) => i % 2 === 0),
-];
-
 export function BrandRail() {
   return (
     <div className="mt-20 lg:mt-28" data-reveal>
@@ -37,9 +30,8 @@ export function BrandRail() {
         Uradni serviser in prodajalec
       </h3>
 
-      <div className="mt-10 grid gap-4 sm:gap-6">
-        <BrandRow brands={TOP_ROW} duration="36s" />
-        <BrandRow brands={BOTTOM_ROW} duration="43s" reverse ariaHidden />
+      <div className="mt-10">
+        <BrandRow brands={BRANDS} duration="52s" />
       </div>
     </div>
   );
@@ -48,17 +40,12 @@ export function BrandRail() {
 function BrandRow({
   brands,
   duration,
-  reverse = false,
-  ariaHidden = false,
 }: {
   brands: Brand[];
   duration: string;
-  reverse?: boolean;
-  ariaHidden?: boolean;
 }) {
   return (
     <div
-      aria-hidden={ariaHidden || undefined}
       className={cn(
         "brand-row relative overflow-hidden",
         // Gentle fade at both ends so marks leave the frame instead of
@@ -68,7 +55,7 @@ function BrandRow({
       )}
     >
       <div
-        className={cn("brand-track", reverse && "brand-track--reverse")}
+        className="brand-track"
         style={{ "--brand-duration": duration } as CSSProperties}
       >
         {[0, 1].map((copy) =>
@@ -76,7 +63,7 @@ function BrandRow({
             <BrandMark
               key={`${copy}-${brand.name}`}
               brand={brand}
-              clone={ariaHidden || copy === 1}
+              clone={copy === 1}
             />
           )),
         )}
@@ -91,7 +78,10 @@ function BrandMark({ brand, clone }: { brand: Brand; clone: boolean }) {
       // The second sequence exists only to close the loop: hidden from
       // assistive tech, and dropped entirely under reduced motion.
       {...(clone ? { "data-marquee-clone": "", "aria-hidden": true } : {})}
-      className="flex shrink-0 items-center justify-center px-7 py-3 sm:px-9"
+      // Carrying the section alone, so the marks are given more air and
+      // a little more height than they had when a second row was sharing
+      // the work.
+      className="flex shrink-0 items-center justify-center px-8 py-4 sm:px-11"
     >
       <Image
         src={brand.file}
@@ -102,7 +92,7 @@ function BrandMark({ brand, clone }: { brand: Brand; clone: boolean }) {
         unoptimized
         // Height is normalised per mark, width follows the real aspect
         // ratio. `max-w-none` keeps wide wordmarks from being squashed.
-        style={{ height: brand.size }}
+        style={{ height: Math.round(brand.size * 1.12) }}
         className="w-auto max-w-none object-contain"
       />
     </div>

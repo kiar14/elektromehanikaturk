@@ -7,13 +7,14 @@ import { ActionLink } from "@/components/ui/actions";
 import { ROUTES } from "@/lib/navigation";
 import { breadcrumbSchema } from "@/lib/structured-data";
 import { PRIMARY_PHONE } from "@/lib/site";
+import { socialMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = socialMetadata({
   title: "Cenik osnovnih storitev",
   description:
     "Cenik osnovnih storitev servisa in vzdrževanja klimatskih naprav ter bele tehnike Elektromehanike Turk.",
-  alternates: { canonical: "/cenik" },
-};
+  path: "/cenik",
+});
 
 const SERVICE_PRICES: {
   title: string;

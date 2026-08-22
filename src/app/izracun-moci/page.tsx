@@ -4,13 +4,14 @@ import { PageHero } from "@/components/layout/PageHero";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { PowerCalculator } from "@/components/tools/PowerCalculator";
 import { breadcrumbSchema } from "@/lib/structured-data";
+import { socialMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = socialMetadata({
   title: "Izračun moči klime in toplotne črpalke",
   description:
     "Okvirno izračunajte potrebno moč klimatske naprave ali toplotne črpalke ter velikost zalogovnika za sanitarno vodo.",
-  alternates: { canonical: "/izracun-moci" },
-};
+  path: "/izracun-moci",
+});
 
 export default function PowerCalculatorPage() {
   const breadcrumb = breadcrumbSchema([

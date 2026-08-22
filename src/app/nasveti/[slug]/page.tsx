@@ -14,6 +14,7 @@ import {
   articleHref,
   getRelatedArticles,
 } from "@/content/nasveti";
+import { socialMetadata } from "@/lib/metadata";
 import { ROUTES } from "@/lib/navigation";
 import { PRIMARY_PHONE, SITE } from "@/lib/site";
 import { breadcrumbSchema } from "@/lib/structured-data";
@@ -34,18 +35,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const canonical = articleHref(article.slug);
 
-  return {
+  return socialMetadata({
     title: article.metaTitle,
     description: article.metaDescription,
-    alternates: { canonical },
-    openGraph: {
-      type: "article",
-      title: article.metaTitle,
-      description: article.metaDescription,
-      url: canonical,
-      images: [{ url: article.image, alt: article.imageAlt }],
-    },
-  };
+    path: canonical,
+    image: { url: article.image, alt: article.imageAlt },
+    type: "article",
+  });
 }
 
 export default async function ArticlePage({ params }: Props) {

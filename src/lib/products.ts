@@ -382,6 +382,7 @@ export const CATEGORY_CARDS = [
 export const SHOP_MENU_GROUPS = [
   {
     title: "Klimatske naprave",
+    icon: "snowflake",
     links: [
       { label: "Vse klimatske naprave", category: "Klimatske naprave" },
       { label: "Mitsubishi Electric", brand: "Mitsubishi Electric" },
@@ -390,6 +391,7 @@ export const SHOP_MENU_GROUPS = [
   },
   {
     title: "Bela tehnika",
+    icon: "washing-machine",
     links: [
       { label: "Sušilni stroji", subcategory: "Sušilni stroji" },
       { label: "Hladilniki", subcategory: "Hladilniki" },
@@ -398,6 +400,7 @@ export const SHOP_MENU_GROUPS = [
   },
   {
     title: "Gostinska in hladilna oprema",
+    icon: "refrigerator",
     links: [
       { label: "Hladilne omare", subcategory: "Hladilne omare" },
       { label: "Zamrzovalne omare", subcategory: "Zamrzovalne omare" },
@@ -415,6 +418,17 @@ export function formatPrice(value: number) {
     currency: "EUR",
     minimumFractionDigits: 2,
   }).format(value);
+}
+
+/**
+ * Resolves a curated id list to products, in the order given and with
+ * anything unknown dropped. Service pages pick their own shortlist by id
+ * so the copy never restates a name, a price or a route the store owns.
+ */
+export function getProductsByIds(ids: readonly string[]): StoreProduct[] {
+  return ids
+    .map((id) => PRODUCT_BY_ID.get(id))
+    .filter((product): product is StoreProduct => product !== undefined);
 }
 
 export function getRelatedProducts(product: StoreProduct, limit = 3) {

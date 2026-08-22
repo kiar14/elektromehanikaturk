@@ -4,10 +4,20 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
-import { ArrowRight, ChevronDown, Phone } from "lucide-react";
+import {
+  ArrowRight,
+  ChevronDown,
+  Flame,
+  Phone,
+  Refrigerator,
+  Snowflake,
+  Video,
+  WashingMachine,
+  Wrench,
+} from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { PRIMARY_NAV, ROUTES } from "@/lib/navigation";
+import { PRIMARY_NAV, ROUTES, SERVICES_SECTION_HREF, type NavIcon } from "@/lib/navigation";
 import { PRIMARY_PHONE } from "@/lib/site";
 import { onScroll } from "@/lib/scroll";
 import { SHOP_MENU_GROUPS } from "@/lib/products";
@@ -24,6 +34,74 @@ const panelMotion = {
   exit: { opacity: 0, y: -6 },
   transition: { duration: 0.16, ease: [0.32, 0.72, 0, 1] as const },
 };
+
+/**
+ * Container chrome for every dropdown, in one place so the two panels
+ * cannot drift apart again: same radius, border, surface, shadow,
+ * inset and entrance, centred on their own trigger. Only the width is
+ * per-panel — the shop menu carries three columns of links and the
+ * services menu two columns of labelled rows, and forcing those to the
+ * same measure would cramp one to flatter the other. The viewport clamp
+ * is insurance: both panels are wider than the gap between the first nav
+ * item and the window edge at the narrow end of `xl`.
+ */
+const PANEL_CHROME =
+  "absolute top-[calc(100%+0.75rem)] left-1/2 z-10 max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded-[12px] border border-line bg-paper p-4 shadow-[0_24px_60px_-28px_rgba(18,21,26,0.45)]";
+
+/** Row hit area and hover, shared by both panels' links. */
+const PANEL_ITEM =
+  "flex items-start gap-3 rounded-[8px] px-3 py-2.5 transition-colors duration-150 hover:bg-mist";
+
+const PANEL_ICON = "mt-px size-4 shrink-0 text-ink-4 transition-colors";
+
+const NAV_ICONS: Record<NavIcon, typeof Wrench> = {
+  wrench: Wrench,
+  snowflake: Snowflake,
+  "washing-machine": WashingMachine,
+  flame: Flame,
+  refrigerator: Refrigerator,
+  video: Video,
+};
+
+function NavGlyph({ name }: { name?: NavIcon }) {
+  if (!name) return null;
+  const Icon = NAV_ICONS[name];
+  return <Icon aria-hidden="true" className={PANEL_ICON} strokeWidth={1.75} />;
+}
+
+/** The footer rule both panels end on: a way in, and one highlight. */
+function PanelFooter({
+  primary,
+  secondary,
+  onNavigate,
+}: {
+  primary: { label: string; href: string };
+  secondary: { label: string; href: string };
+  onNavigate: () => void;
+}) {
+  return (
+    <div className="mt-3 flex items-center justify-between gap-4 border-t border-line px-3 pt-3.5">
+      <Link
+        href={primary.href}
+        onClick={onNavigate}
+        className="group inline-flex items-center gap-2 text-[0.875rem] font-semibold text-ink transition-colors hover:text-brand"
+      >
+        {primary.label}
+        <ArrowRight
+          aria-hidden="true"
+          className="size-4 transition-transform group-hover:translate-x-0.5"
+        />
+      </Link>
+      <Link
+        href={secondary.href}
+        onClick={onNavigate}
+        className="text-[0.875rem] font-semibold text-brand transition-colors hover:text-brand-2"
+      >
+        {secondary.label}
+      </Link>
+    </div>
+  );
+}
 
 export function Navbar() {
   const [solid, setSolid] = useState(false);
@@ -145,7 +223,7 @@ export function Navbar() {
                   <Link
                     href={item.href}
                     onClick={() => setOpenMenu(null)}
-                    className="rounded-l-md py-2 pr-1 pl-3 text-[0.875rem] font-medium text-on-dark/85 transition-colors hover:text-white"
+                    className="rounded-l-md py-2 pr-1 pl-2.5 text-[0.8125rem] font-medium whitespace-nowrap text-on-dark/85 transition-colors hover:text-white"
                   >
                     Trgovina
                   </Link>
@@ -220,7 +298,7 @@ export function Navbar() {
                       <motion.div
                         {...panelMotion}
                         id={`menu-${slug(item.label)}`}
-                        className="absolute top-[calc(100%+0.75rem)] left-1/2 w-[41rem] -translate-x-1/2 rounded-[12px] border border-line bg-paper p-2 shadow-[0_24px_60px_-28px_rgba(18,21,26,0.45)]"
+                        className={cn(PANEL_CHROME, "w-[43rem]")}
                       >
                         <ul className="grid grid-cols-2 gap-0.5">
                           {item.children.map((child) => (
@@ -228,20 +306,34 @@ export function Navbar() {
                               <Link
                                 href={child.href}
                                 onClick={() => setOpenMenu(null)}
-                                className="block rounded-[8px] px-3.5 py-3 transition-colors hover:bg-mist"
+                                className={PANEL_ITEM}
                               >
-                                <span className="block text-[0.9375rem] font-medium text-ink">
-                                  {child.label}
-                                </span>
-                                {child.description ? (
-                                  <span className="mt-0.5 block text-[0.8125rem] leading-snug text-ink-3">
-                                    {child.description}
+                                <NavGlyph name={child.icon} />
+                                <span className="min-w-0">
+                                  <span className="block text-[0.875rem] font-medium text-ink">
+                                    {child.label}
                                   </span>
-                                ) : null}
+                                  {child.description ? (
+                                    <span className="mt-0.5 block text-[0.8125rem] leading-snug text-ink-3">
+                                      {child.description}
+                                    </span>
+                                  ) : null}
+                                </span>
                               </Link>
                             </li>
                           ))}
                         </ul>
+                        <PanelFooter
+                          primary={{
+                            label: "Vse storitve",
+                            href: SERVICES_SECTION_HREF,
+                          }}
+                          secondary={{
+                            label: "Brezplačno svetovanje",
+                            href: ROUTES.remoteAdvice,
+                          }}
+                          onNavigate={() => setOpenMenu(null)}
+                        />
                       </motion.div>
                     ) : null}
                   </AnimatePresence>
@@ -296,19 +388,31 @@ function ShopMegaMenu({ onNavigate }: { onNavigate: () => void }) {
     <motion.div
       {...panelMotion}
       id="menu-trgovina"
-      className="absolute top-[calc(100%+0.75rem)] left-1/2 w-[50rem] -translate-x-1/2 rounded-[12px] border border-line bg-paper p-5 shadow-[0_24px_60px_-28px_rgba(18,21,26,0.45)]"
+      className={cn(PANEL_CHROME, "w-[46rem]")}
     >
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-3 gap-x-4 gap-y-6">
         {SHOP_MENU_GROUPS.map((group) => (
           <div key={group.title}>
-            <p className="text-sm font-semibold text-ink">{group.title}</p>
-            <ul className="mt-2 grid gap-0.5">
+            {/* Column headings take the site's micro-label style rather
+                than a second weight of body text, so a heading is never
+                mistaken for one of the links under it. */}
+            {/* `min-h` reserves the second line "Gostinska in hladilna
+                oprema" needs, so all three link lists start on the same
+                line whether their heading wraps or not. */}
+            <p className="flex min-h-8 items-start gap-2 px-3 text-[0.6875rem] font-medium tracking-[0.12em] text-ink-4 uppercase">
+              <NavGlyph name={group.icon} />
+              {group.title}
+            </p>
+            <ul className="mt-1.5 grid gap-0.5">
               {group.links.map((link) => (
                 <li key={link.label}>
                   <Link
                     href={shopFilterHref(link)}
                     onClick={onNavigate}
-                    className="block rounded-[8px] px-2 py-2 text-sm text-ink-3 transition-colors hover:bg-mist hover:text-ink"
+                    className={cn(
+                      PANEL_ITEM,
+                      "text-[0.875rem] font-medium text-ink",
+                    )}
                   >
                     {link.label}
                   </Link>
@@ -318,26 +422,14 @@ function ShopMegaMenu({ onNavigate }: { onNavigate: () => void }) {
           </div>
         ))}
       </div>
-      <div className="mt-5 flex items-center justify-between border-t border-line pt-4">
-        <Link
-          href="/trgovina"
-          onClick={onNavigate}
-          className="group inline-flex items-center gap-2 text-sm font-semibold text-ink transition-colors hover:text-brand"
-        >
-          Vsi izdelki
-          <ArrowRight
-            aria-hidden="true"
-            className="size-4 transition-transform group-hover:translate-x-0.5"
-          />
-        </Link>
-        <Link
-          href="/trgovina?akcija=1#vsi-izdelki"
-          onClick={onNavigate}
-          className="text-sm font-semibold text-brand transition-colors hover:text-brand-2"
-        >
-          Izdelki v akciji
-        </Link>
-      </div>
+      <PanelFooter
+        primary={{ label: "Vsi izdelki", href: "/trgovina" }}
+        secondary={{
+          label: "Izdelki v akciji",
+          href: "/trgovina?akcija=1#vsi-izdelki",
+        }}
+        onNavigate={onNavigate}
+      />
     </motion.div>
   );
 }

@@ -5,6 +5,7 @@ import { ContactForm } from "@/components/forms/ContactForm";
 import { PageHero } from "@/components/layout/PageHero";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { breadcrumbSchema } from "@/lib/structured-data";
+import { socialMetadata } from "@/lib/metadata";
 import {
   ADDRESS,
   GOOGLE_URL,
@@ -13,12 +14,12 @@ import {
   SITE,
 } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = socialMetadata({
   title: "Kontakt",
   description:
     "Kontaktni podatki, odpiralni čas, lokacija in kontaktni obrazec Elektromehanike Turk na Otočcu.",
-  alternates: { canonical: "/kontakt" },
-};
+  path: "/kontakt",
+});
 
 export default function ContactPage() {
   const breadcrumb = breadcrumbSchema([

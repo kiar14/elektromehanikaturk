@@ -7,17 +7,21 @@ import { InnerCta } from "@/components/layout/InnerCta";
 import { PageHero } from "@/components/layout/PageHero";
 import { BrandGrid } from "@/components/sections/BrandGrid";
 import { Process } from "@/components/sections/Process";
+import { ProductCard } from "@/components/store/ProductCard";
 import { ActionLink, ArrowLink } from "@/components/ui/actions";
 import {
   GENERIC_SERVICE_STEPS,
   type ServiceAction,
   type ServicePageData,
   type ServicePricing,
+  type ServiceProducts,
 } from "@/content/storitve";
 import { getMeaningfulFaqItems } from "@/lib/faq";
+import { cn } from "@/lib/utils";
 import {
   PRODUCT_BY_ID,
   formatPrice,
+  getProductsByIds,
   productHref,
 } from "@/lib/products";
 
@@ -30,6 +34,17 @@ export function ServicePageTemplate({ service }: { service: ServicePageData }) {
     .filter((group) => group.items.length > 0);
   const brands = service.brands?.filter((brand) => brand.trim().length > 0) ?? [];
   const faqs = getMeaningfulFaqItems(service.faqs);
+
+  // A `shop` pricing block already features one product in full above,
+  // so it is dropped from the shortlist rather than shown twice on the
+  // same page.
+  const featuredProductId =
+    service.pricing.mode === "shop" ? service.pricing.productId : null;
+  const products = service.products
+    ? getProductsByIds(
+        service.products.productIds.filter((id) => id !== featuredProductId),
+      )
+    : [];
 
   return (
     <>
@@ -62,6 +77,13 @@ export function ServicePageTemplate({ service }: { service: ServicePageData }) {
       {includedGroups.length > 0 ? <IncludedSection groups={includedGroups} /> : null}
       {hasMeaningfulPricing(service.pricing) ? (
         <PricingSection pricing={service.pricing} primaryAction={service.primaryAction} />
+      ) : null}
+
+      {products.length > 0 && service.products ? (
+        <ProductsSection
+          heading={service.products.heading}
+          products={products}
+        />
       ) : null}
 
       {brands.length > 0 ? <BrandGrid names={brands} /> : null}
@@ -105,6 +127,60 @@ export function ServicePageTemplate({ service }: { service: ServicePageData }) {
         }
       />
     </>
+  );
+}
+
+/**
+ * A short shelf of store products next to the service, not a category
+ * page: at most four cards in a single row, the same `ProductCard` the
+ * shop grid uses so price, badge and Add-to-cart behave identically, and
+ * one link out to the full catalogue.
+ */
+function ProductsSection({
+  heading,
+  products,
+}: {
+  heading: ServiceProducts["heading"];
+  products: ReturnType<typeof getProductsByIds>;
+}) {
+  const shown = products.slice(0, 4);
+  // The catalogue is filtered to the category these products came from,
+  // which is the shelf's own subject.
+  const shopHref = `/trgovina?kategorija=${encodeURIComponent(
+    shown[0].category,
+  )}#vsi-izdelki`;
+
+  return (
+    <section className="bg-paper py-16 sm:py-20 lg:py-24">
+      <div className="shell">
+        <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-4" data-reveal>
+          <div>
+            <p className="eyebrow">Iz trgovine</p>
+            <h2 className="mt-5 text-[2.25rem] leading-[1.05] sm:text-[2.75rem]">
+              {heading}
+            </h2>
+          </div>
+          <ArrowLink href={shopHref}>Vsi izdelki v kategoriji</ArrowLink>
+        </div>
+
+        <div
+          // Column count follows the shortlist so two products do not
+          // stretch across a four-column track; the width cap keeps a
+          // pair the same size as a full row rather than ballooning.
+          className={cn(
+            "mt-10 grid gap-5 sm:grid-cols-2",
+            shown.length >= 4 && "lg:grid-cols-4",
+            shown.length === 3 && "lg:grid-cols-3",
+            shown.length === 2 && "max-w-[38rem]",
+          )}
+          data-reveal
+        >
+          {shown.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 

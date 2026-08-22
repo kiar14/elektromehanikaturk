@@ -79,13 +79,25 @@ visible. Animation can never gate access to content.
 
 ## Assets
 
-Source imagery lives in `.assets-src/`. Two scripts regenerate
+Source imagery lives in `.assets-src/`. Three scripts regenerate
 everything under `public/images/`:
 
 ```bash
 node scripts/build-images.cjs           # hero, service photos, products, logo
 node scripts/build-brand-logos.cjs      # the 15 manufacturer logos
+node scripts/build-og-image.cjs         # the 1200x630 social preview card
 ```
+
+`build-og-image.cjs` needs the trimmed wordmark `build-images.cjs`
+produces, so run it second. It rebuilds the homepage hero at card
+proportions — same photograph, same left-hand ink scrim, same white
+wordmark — and burns no headline into the pixels: every platform the
+card is aimed at renders `og:title` and `og:description` as live text
+beside the image, so repeating the headline inside it is what makes a
+preview look cluttered. `src/lib/metadata.ts` is the single place the
+`openGraph` and `twitter` blocks are assembled; a route that writes its
+own `openGraph` **replaces** the parent's rather than extending it, which
+is how pages used to lose `og:site_name` and advertise the homepage on X.
 
 The manufacturer logos need their own pass because the sources arrive
 in three shapes and all of them have to end up floating on the off-white

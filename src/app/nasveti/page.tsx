@@ -9,13 +9,14 @@ import { ARTICLES, articleHref } from "@/content/nasveti";
 import { ROUTES } from "@/lib/navigation";
 import { PRIMARY_PHONE, SITE } from "@/lib/site";
 import { breadcrumbSchema } from "@/lib/structured-data";
+import { socialMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = socialMetadata({
   title: "Nasveti in koristne informacije",
   description:
     "Praktični nasveti za uporabo, izbiro in vzdrževanje klimatskih naprav ter gospodinjskih aparatov. Elektromehanika Turk, Otočec.",
-  alternates: { canonical: "/nasveti" },
-};
+  path: "/nasveti",
+});
 
 export default function AdvicePage() {
   const breadcrumb = breadcrumbSchema([

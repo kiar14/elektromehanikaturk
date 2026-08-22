@@ -10,13 +10,14 @@ import { ActionLink } from "@/components/ui/actions";
 import { ROUTES } from "@/lib/navigation";
 import { PRIMARY_PHONE } from "@/lib/site";
 import { breadcrumbSchema } from "@/lib/structured-data";
+import { socialMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = socialMetadata({
   title: "O nas",
   description:
     "Elektromehanika Turk z Otočca že več kot 20 let skrbi za servis, montažo in prodajo naprav za dom ter profesionalno uporabo.",
-  alternates: { canonical: "/o-nas" },
-};
+  path: "/o-nas",
+});
 
 const WORK_LINKS = [
   {

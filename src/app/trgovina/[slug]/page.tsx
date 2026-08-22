@@ -6,6 +6,7 @@ import { Check } from "lucide-react";
 
 import { ProductPurchase } from "@/components/store/ProductPurchase";
 import { ProductCard } from "@/components/store/ProductCard";
+import { socialMetadata } from "@/lib/metadata";
 import {
   PRODUCT_BY_SLUG,
   PRODUCTS,
@@ -30,16 +31,16 @@ export async function generateMetadata({
   const { slug } = await params;
   const product = PRODUCT_BY_SLUG.get(slug);
   if (!product) return {};
-  return {
+  // `summary` rather than the wide card: these are studio shots standing
+  // on a plain background at every aspect from 1100x414 to 867x2560, and
+  // a 1.91:1 crop of a tall fridge is a picture of its middle drawer.
+  return socialMetadata({
     title: product.title,
     description: product.summary,
-    alternates: { canonical: `/trgovina/${product.slug}` },
-    openGraph: {
-      title: product.title,
-      description: product.summary,
-      images: [{ url: product.image, alt: product.imageAlt }],
-    },
-  };
+    path: `/trgovina/${product.slug}`,
+    image: { url: product.image, alt: product.imageAlt },
+    card: "summary",
+  });
 }
 
 export default async function ProductPage({
