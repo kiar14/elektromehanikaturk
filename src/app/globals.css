@@ -376,3 +376,72 @@
     animation: none;
   }
 }
+
+/* ============================================================
+   Hero entrance — the headline arrives line by line from behind
+   its own baseline, the supporting copy rises after it.
+
+   Deliberately CSS rather than GSAP: the hero is the first thing
+   painted and the motion bundle is loaded after hydration, so a
+   JS-driven entrance would either start late or force the bundle
+   onto the critical path. Same reasoning as `.page-hero-enter`.
+
+   Gated on `.js-anim` for the same reason as the scroll reveals —
+   with JS off or reduced motion requested the class is never added
+   and the hero is simply there, unclipped and unanimated.
+   ============================================================ */
+@keyframes hero-line-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 130%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* The mask each headline line slides out of.
+
+   `clip-path` rather than `overflow: hidden` on purpose. The line box
+   is 0.98em tall — shorter than the type — so an overflow mask sitting
+   on the box edge would shave the descender off "preprosto" for good,
+   and padding to clear it would need a negative margin to cancel, which
+   collapses against the next line's `mt-1`. A negative bottom inset
+   moves the mask edge below the box without touching layout at all, and
+   the -100% sides guarantee the mask never clips the line horizontally. */
+.js-anim .hero-line {
+  clip-path: inset(-0.5em -100% -0.28em -100%);
+}
+
+.js-anim .hero-line-inner {
+  animation: hero-line-rise 1.15s var(--ease-out-soft) both;
+  animation-delay: var(--hero-delay, 0s);
+}
+
+.js-anim .hero-enter {
+  animation: hero-rise 0.8s var(--ease-out-soft) both;
+  animation-delay: var(--hero-delay, 0s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js-anim .hero-line {
+    clip-path: none;
+  }
+
+  .js-anim .hero-line-inner,
+  .js-anim .hero-enter {
+    animation: none;
+  }
+}

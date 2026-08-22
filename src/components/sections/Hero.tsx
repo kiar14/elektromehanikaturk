@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import { Star } from "lucide-react";
 
@@ -74,18 +75,36 @@ export function Hero() {
       <div className="shell relative z-30 pt-[calc(4.75rem+38dvh)] pb-[calc(5.25rem+env(safe-area-inset-bottom))] md:pb-16 lg:pt-32 lg:pb-32">
         <div className="max-w-[34rem] lg:max-w-[38rem]">
           <h1 className="text-[clamp(1.8rem,9vw,2.75rem)] leading-[0.98] font-semibold text-white sm:text-[3.5rem] lg:text-[4.25rem] xl:text-[4.75rem]">
-            <span className="block whitespace-nowrap">Ko mora tehnika{" "}</span>
-            <span className="mt-1 block whitespace-nowrap">
-              preprosto delovati.
+            <span className="hero-line block">
+              <span
+                className="hero-line-inner block whitespace-nowrap"
+                style={{ "--hero-delay": "0.08s" } as CSSProperties}
+              >
+                Ko mora tehnika{" "}
+              </span>
+            </span>
+            <span className="hero-line mt-1 block">
+              <span
+                className="hero-line-inner block whitespace-nowrap"
+                style={{ "--hero-delay": "0.2s" } as CSSProperties}
+              >
+                preprosto delovati.
+              </span>
             </span>
           </h1>
 
-          <p className="mt-6 max-w-[30rem] text-[1.0625rem] leading-relaxed text-white/80 sm:text-[1.125rem]">
+          <p
+            className="hero-enter mt-6 max-w-[30rem] text-[1.0625rem] leading-relaxed text-white/80 sm:text-[1.125rem]"
+            style={{ "--hero-delay": "0.46s" } as CSSProperties}
+          >
             Servis, montaža in prodaja klimatskih naprav, toplotnih črpalk,
             bele tehnike in hladilne opreme.
           </p>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center lg:mt-9">
+          <div
+            className="hero-enter mt-8 flex flex-col gap-3 sm:flex-row sm:items-center lg:mt-9"
+            style={{ "--hero-delay": "0.58s" } as CSSProperties}
+          >
             <ActionLink href={ROUTES.booking} variant="brand" size="lg">
               Naroči servis
             </ActionLink>
@@ -99,7 +118,10 @@ export function Hero() {
             </ActionLink>
           </div>
 
-          <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-2 text-[0.875rem] text-white/70">
+          <div
+            className="hero-enter mt-8 flex flex-wrap items-center gap-x-7 gap-y-2 text-[0.875rem] text-white/70"
+            style={{ "--hero-delay": "0.7s" } as CSSProperties}
+          >
             <span>
               <strong className="nums font-semibold text-white">
                 {YEARS_EXPERIENCE}
