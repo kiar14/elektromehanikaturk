@@ -94,7 +94,7 @@ export function MobileNavigation() {
                     <Link
                       href={item.href}
                       onClick={() => setOpen(false)}
-                      className="block py-2.5 text-lg font-medium text-on-dark transition-colors duration-150 hover:text-white"
+                      className="block py-3 text-2xl font-medium text-on-dark transition-colors duration-150 hover:text-white"
                     >
                       {item.label}
                     </Link>
@@ -103,7 +103,7 @@ export function MobileNavigation() {
             </ul>
 
             <div className="mt-8 border-t border-line-dark pt-6">
-              <p className="text-[0.6875rem] font-medium tracking-[0.16em] text-on-dark-2 uppercase">
+              <p className="text-xs font-medium tracking-[0.16em] text-on-dark-2 uppercase">
                 Pokličite nas
               </p>
               <ul className="mt-3 grid gap-2">
@@ -111,9 +111,9 @@ export function MobileNavigation() {
                   <li key={phone.tel}>
                     <a
                       href={`tel:${phone.tel}`}
-                      className="nums inline-flex items-center gap-2.5 text-[1.0625rem] font-medium text-on-dark transition-colors duration-150 hover:text-white"
+                      className="nums inline-flex items-center gap-2.5 text-xl font-medium text-on-dark transition-colors duration-150 hover:text-white"
                     >
-                      <Phone aria-hidden="true" className="size-4 text-on-dark-2" />
+                      <Phone aria-hidden="true" className="size-5 text-on-dark-2" />
                       {phone.label}
                     </a>
                   </li>
@@ -158,7 +158,7 @@ function MenuGroup({
         <Link
           href={href}
           onClick={onNavigate}
-          className="text-lg font-semibold text-on-dark transition-colors hover:text-white"
+          className="text-2xl font-semibold text-on-dark transition-colors hover:text-white"
         >
           {title}
         </Link>
@@ -167,11 +167,11 @@ function MenuGroup({
           onClick={() => setExpanded((current) => !current)}
           aria-label={`${expanded ? "Skrij" : "Prikaži"} kategorije: ${title}`}
           aria-expanded={expanded}
-          className="flex size-9 items-center justify-center rounded-[10px] border border-white/15 text-on-dark transition-colors hover:bg-white/10"
+          className="flex size-10 items-center justify-center rounded-[10px] border border-white/15 text-on-dark transition-colors hover:bg-white/10"
         >
           <ChevronDown
             aria-hidden="true"
-            className={`size-4 transition-transform duration-200 ${expanded ? "rotate-180" : ""}`}
+            className={`size-5 transition-transform duration-200 ${expanded ? "rotate-180" : ""}`}
           />
         </button>
       </div>
@@ -182,7 +182,7 @@ function MenuGroup({
               <Link
                 href={link.href}
                 onClick={onNavigate}
-                className="block py-2 text-[0.9375rem] font-medium text-on-dark-2 transition-colors hover:text-white"
+                className="block py-2.5 text-lg font-medium text-on-dark-2 transition-colors hover:text-white"
               >
                 {link.label}
               </Link>
